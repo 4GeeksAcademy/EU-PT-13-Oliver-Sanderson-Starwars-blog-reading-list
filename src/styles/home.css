@@ -1,0 +1,7 @@
+.setWidth {
+    width: 300px !important;
+}
+
+.scrollBox {
+    overflow-x: scroll;
+}
