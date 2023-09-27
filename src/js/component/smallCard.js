@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 function SmallCard(props) {
+    const{store, actions} = useContext(Context)
 
     let type
 
@@ -16,6 +18,7 @@ function SmallCard(props) {
                 <img className="img-thumbnail" src={`https://starwars-visualguide.com/assets/img/${type}/${props.id}.jpg`} />
                 <h3 className="setWidth">{props.name}</h3>
                 <Link to={"/profile/" + type + "/" + props.arrIndex} className="btn btn-primary">More info</Link>
+                <button className="btn btn-danger" onClick={() => {actions.addFavourite(type, props.arrIndex)}}>Fav</button>
             </div>
 }
 

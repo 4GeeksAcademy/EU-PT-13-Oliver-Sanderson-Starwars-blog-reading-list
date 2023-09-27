@@ -5,7 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			characters: ["loading characters"],
 			vehicles: ["loading vehicles"],
 			planets: ["loading planets"],
-			favourites: ["Feature not yet implemented"],
+			favourites: [],
 			test: 321,
 
 			demo: [
@@ -65,6 +65,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					.catch((error) => console.log("loadCompleteList error " + error))
 				});
+			},
+
+			addFavourite(type, arrIndex) {
+
+				let dupilcate = null
+
+				getStore().favourites.forEach((item, index) => {
+					if ((item[0] === type) && (item[1] === arrIndex)) {
+						dupilcate = index.toString() //now filter using this index
+					}
+				})
+
+				if (dupilcate) {
+					let newFaveList = getStore().favourites.filter((fav, index) => {
+						return index != parseInt(dupilcate)
+					})
+					setStore({favourites: newFaveList})
+					} else {
+					let newFave = getStore().favourites.push([type,arrIndex])
+					setStore({favourites: getStore().favourites})
+				}
+
+
 			},
 
 			exampleFunction: () => {
