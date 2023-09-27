@@ -38,14 +38,6 @@ export const Home = () => {
 
 	return(
 	<div className="container">
-		<h1>Eye color test</h1>
-		<div>{store.characters[0].props? store.characters[0].props["eye_color"] : "NOT LOADED"}</div>
-		<div>{store.favourites}</div>
-		<div>{mappedFavourites}</div>
-		<button onClick={() => {
-			console.log("click");
-			navigate("/profile/characters/0");
-		}}>Test navigate</button>
 		<h1 className="text-danger mb-3 mt-5">Characters</h1>
 		<div className="d-flex scrollBox">{mappedPeople}</div>
 		<h1 className="text-danger mb-3 mt-5">Vehicles</h1>
