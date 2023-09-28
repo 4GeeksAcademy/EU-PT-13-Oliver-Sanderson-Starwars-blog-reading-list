@@ -2,11 +2,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 
+			loadingPeople: true,
+			problemsPeople: false,
+			loadingVehicles: true,
+			problemsVehicles: false,
+			loadingPlanets: true,
+			problemsPlanets: false,
+			loadingExtras: true,
+			problemsExtras: false,
 			characters: ["loading characters"],
 			vehicles: ["loading vehicles"],
 			planets: ["loading planets"],
 			favourites: [],
-			test: 321,
 
 			demo: [
 				{
@@ -25,45 +32,56 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Use getActions to call a function within a fuction
 
 			loadPeople() {
+				setStore({ loadingPeople: true });
+				setStore({problemsPeople : false});
 				fetch("https://www.swapi.tech/api/people")
-				.then((recieved) => recieved.json())
+				.then((recieved) => {if (!recieved.ok) {setStore({problemsPeople : true})}; return recieved.json()})
 				.then((data) => {
 					 setStore({ characters: data.results });
+					 setStore({ loadingPeople: false });
 					 getActions().loadCompleteList(getStore().characters)
 				})
-				.catch((error) => console.log("loadPeople error " + error))
+				.catch((error) => {setStore({problemsPeople : true}); console.log("loadPeople error " + error)})
 			},
 
 			loadVehicles() {
+				setStore({ loadingVehicles: true });
+				setStore({problemsVehicles : false});
 				fetch("https://www.swapi.tech/api/vehicles")
-				.then((recieved) => recieved.json())
+				.then((recieved) => {if (!recieved.ok) {setStore({problemsVehicles : true})}; return recieved.json()})
 				.then((data) => {
 					 setStore({	vehicles: data.results });
+					 setStore({ loadingVehicles: false });
 					 getActions().loadCompleteList(getStore().vehicles)
 				})
-				.catch((error) => console.log("loadVehicles error " + error))
+				.catch((error) => {setStore({problemsVehicles : true}); console.log("loadVehicles error " + error)})
 			},
 
 			loadPlanets() {
+				setStore({ loadingPlanets: true });
+				setStore({problemsPlanets : false});
 				fetch("https://www.swapi.tech/api/planets")
-				.then((recieved) => recieved.json())
+				.then((recieved) => {if (!recieved.ok) {setStore({problemsPlanets : true})}; return recieved.json()})
 				.then((data) => {
-					 setStore({ planets: data.results })
+					 setStore({ planets: data.results });
+					 setStore({ loadingPlanets: false });
 					 getActions().loadCompleteList(getStore().planets)
 				})
-				.catch((error) => console.log("loadPlanets error " + error))
+				.catch((error) => {setStore({problemsPlanets : true}); console.log("loadPlanets error " + error)})
 			},
 
 			loadCompleteList(originalList) {
 				console.log(originalList)
 				originalList.forEach(element => {
+					setStore({loadingExtras: true });
+					setStore({problemsExtras : false});
 					fetch(element.url)
-					.then((recieved) => recieved.json())
+					.then((recieved) => {if (!recieved.ok) {setStore({problemsExtras : true})}; return recieved.json()})
 					.then((data) => {
 						element["props"] = data.result.properties
-						setStore({test: "123"})
+						setStore({ loadingExtras: false }); //if removeing this make sure something sets store as this makes it refresh
 					})
-					.catch((error) => console.log("loadCompleteList error " + error))
+					.catch((error) => {setStore({problemsExtras : true});console.log("loadCompleteList error " + error)})
 				});
 			},
 
