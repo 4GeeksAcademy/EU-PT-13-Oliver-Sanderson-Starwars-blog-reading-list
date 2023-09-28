@@ -14,3 +14,7 @@ body {
 .scrollBox {
     overflow-x: scroll;
 }
+
+.disabled-link {
+    pointer-events: none;
+  }

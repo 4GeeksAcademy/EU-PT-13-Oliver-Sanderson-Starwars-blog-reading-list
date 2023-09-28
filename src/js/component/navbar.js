@@ -24,7 +24,7 @@ export const Navbar = () => {
 
 
 			<div className="nav-item me-4">
-				<select class="form-select" onChange={(e) => {
+				<select className="form-select" onChange={(e) => {
 					console.log(e.target.value)
 					navigate("/profile/" + e.target.value);
 				}}>
